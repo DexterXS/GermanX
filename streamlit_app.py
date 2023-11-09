@@ -13,9 +13,6 @@ if st.button("Нажми меня"):
     # Добавление поля для ввода текста
 user_input = st.text_input("Введите текст", max_chars=80)
 
-    # Вывод текста, введенного пользователем
-st.write("Вы ввели:", user_input)
-
 with model.chat_session():
     response1 = model.generate(prompt=user_input, temp=0)
     st.write("Відповідь:", model.current_chat_session)
