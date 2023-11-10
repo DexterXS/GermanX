@@ -1,9 +1,9 @@
 import streamlit as st
 import spacy
-from spacy import displacy
+from annotated_text import annotated_text
 
-# Загрузка модели spaCy для английского языка
-nlp = spacy.load("en_core_web_sm")
+# Загрузка модели spaCy для немецкого языка
+nlp = spacy.load("de_core_web_sm")
 
 
 # Функция для выделения глаголов в тексте
@@ -35,4 +35,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
