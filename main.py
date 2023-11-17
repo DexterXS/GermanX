@@ -1,5 +1,6 @@
 import os
 import sys
+from db_connection import *
 from PyQt5 import uic
 from tabs.tab_1 import *
 

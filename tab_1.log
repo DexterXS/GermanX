@@ -165,3 +165,13 @@
 2023-11-07 18:37:15,680 - INFO - key=akk, Correct answer: "akk"
 2023-11-07 18:37:30,473 - INFO - key=dat, Correct answer: "dat"
 2023-11-07 18:37:37,268 - INFO - key=akk, Correct answer: "akk"
+2023-11-14 19:55:06,191 - INFO - Training started.
+2023-11-14 19:55:06,198 - INFO - Training started.
+2023-11-14 19:55:07,541 - INFO - key=dat, Correct answer: "dat"
+2023-11-14 19:55:07,951 - INFO - key=dat, Incorrect answer: "akk_dat"
+2023-11-14 19:55:08,437 - INFO - key=akk, Correct answer: "akk"
+2023-11-14 19:55:09,015 - INFO - key=dat, Correct answer: "dat"
+2023-11-14 19:55:09,419 - INFO - key=akk, Incorrect answer: "akk_dat"
+2023-11-14 19:55:09,939 - INFO - key=dat, Correct answer: "dat"
+2023-11-14 19:55:10,522 - INFO - key=akk, Correct answer: "akk"
+2023-11-14 19:55:11,417 - INFO - key=akk_dat, Correct answer: "akk_dat"
