@@ -3,7 +3,7 @@ import spacy
 from annotated_text import annotated_text
 
 # Загрузка модели spaCy для немецкого языка
-nlp = spacy.load("de_core_web_sm")
+nlp = spacy.load("de_core_news_sm")
 
 
 # Функция для выделения глаголов в тексте
