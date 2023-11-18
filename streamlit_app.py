@@ -1,5 +1,6 @@
 import streamlit as st
 import spacy
+from annotated_text import annotated_text
 from sqlalchemy import create_engine, Column, Integer, String, text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
