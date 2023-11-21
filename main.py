@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication
 from tabs.tab_1 import *
-from settings.config import LogsSettings
+from settings.log_settings import LogSettings
 
 
 
@@ -15,7 +15,7 @@ class MainWindow(QMainWindow):
 
 
 if __name__ == "__main__":
-    LogsSettings()
+    LogSettings()
     app = QApplication(sys.argv)
     main_window = MainWindow()
     main_window.show()

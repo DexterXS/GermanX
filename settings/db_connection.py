@@ -1,6 +1,6 @@
 import pymysql.cursors
 
-from settings.confidential_data import host, user, password, db_name
+from data.confidential_data import host, user, password, db_name
 
 try:
     connections = pymysql.connect(

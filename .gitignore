@@ -2,4 +2,4 @@
 /logs/**
 
 # Исключаем всю конфидициальную ифнформацию
-/settings/confidential_data.py
+/data/confidential_data.py
