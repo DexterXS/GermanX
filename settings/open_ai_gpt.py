@@ -1,7 +1,8 @@
 import openai
+from settings.confidential_data import api_gpt
 
 # Replace YOUR_API_KEY with your OpenAI API key
-openai.api_key = "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"
+openai.api_key = api_gpt
 
 # задаем модель и промпт
 model_engine = "gpt-3.5-turbo"

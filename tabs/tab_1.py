@@ -1,17 +1,15 @@
 import random
 from PyQt5.QtCore import QTimer
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QLCDNumber
+from PyQt5.QtWidgets import QMainWindow, QPushButton, QLabel, QLCDNumber
 from qtpy import uic
 import logging
-from data import *
-
-logging.basicConfig(filename='tab_1.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+from data.data import *
 
 
 class TabOne(QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('C:/Users/rootu/PycharmProjects/GoodEat/untitled.ui', self)
+        uic.loadUi('./data/untitled.ui', self)
         self.random_key = None
         self.random_wort = None
         self.prepositions = prepositions
