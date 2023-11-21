@@ -1,26 +1,25 @@
 import openai
-from data.confidential_data import api_gpt
+import os
 
-# Replace YOUR_API_KEY with your OpenAI API key
-openai.api_key = api_gpt
 
-# задаем модель и промпт
-model_engine = "davinci-002"
-prompt = "Write word whith Auto"
+class MyChatGPT:
+    def __init__(self, model_engine="davinci-002"):
+        self.model_engine = model_engine
 
-# задаем макс кол-во слов
-max_tokens = 40
+    def set_api_key(self):
+        openai.api_key = os.getenv("API_CHATGPT")
+    def generate_answer(self, input_text='test', max_tokens=0):
+        completion = openai.Completion.create(
+            engine=self.model_engine,
+            prompt=input_text,
+            max_tokens=max_tokens,
+            temperature=0.5,
+            top_p=1,
+            frequency_penalty=0,
+            presence_penalty=0
+        )
+        return completion.choices[0].text.strip()
 
-# генерируем ответ
-completion = openai.Completion.create(
-    engine=model_engine,
-    prompt=prompt,
-    max_tokens=max_tokens,
-    temperature=0.5,
-    top_p=1,
-    frequency_penalty=0,
-    presence_penalty=0
-)
 
-# выводим ответ
-print(completion.choices[0].text)
+my_chat_gpt = MyChatGPT()
+answer = my_chat_gpt.generate_answer(input_text="Как называется чат джипити?")
