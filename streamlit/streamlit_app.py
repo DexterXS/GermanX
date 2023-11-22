@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 
 class WeatherAPI:
-    def init(self, api_key):
+    def __init__(self, api_key):
         self.api_key = api_key
         self.base_url = "http://api.openweathermap.org/data/2.5/weather"
 
@@ -15,28 +15,23 @@ class WeatherAPI:
             data = response.json()
             return data
         except requests.exceptions.HTTPError as errh:
-            st.error(f"HTTP Error: {errh}")
+            st.exception(f"HTTP Error: {errh}")
             return None
         except requests.exceptions.RequestException as err:
-            st.error(f"Request Exception: {err}")
+            st.exception(f"Request Exception: {err}")
             return None
         except requests.exceptions.JSONDecodeError as err:
-            st.error(f"JSON Decode Error: {err}")
-            st.error(f"Response Text: {response.text}")
+            st.exception(f"JSON Decode Error: {err}")
+            st.exception(f"Response Text: {response.text}")
             return None
-
 
 st.title("Погодний додаток")
 
-
 city = st.text_input("Введіть місто:", "Kyiv")
-
 
 api_key = "c6c8f1d7c5a3cb77f9213311afb839d3"
 
-
 weather_api = WeatherAPI(api_key=api_key)
-
 
 weather_data = weather_api.get_weather(city)
 if weather_data:
