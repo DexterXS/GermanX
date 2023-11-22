@@ -7,6 +7,7 @@ class WeatherAPI:
         self.base_url = "http://api.openweathermap.org/data/2.5/weather"
 
     def get_weather(self, city):
+        global response
         params = {"q": city, "appid": self.api_key, "units": "metric"}
         try:
             response = requests.get(self.base_url, params=params)
