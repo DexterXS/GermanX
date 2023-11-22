@@ -9,7 +9,7 @@ data = np.random.randn(100, 2)
 st.title('Пример Streamlit без сторонних библиотек')
 
 # Выводим таблицу данных
-st.dataframe(data, label='Случайные данные')
+st.write('Случайные данные:', data)
 
 # Выводим график с использованием встроенных средств Streamlit
 st.line_chart(data)
