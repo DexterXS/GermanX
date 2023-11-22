@@ -32,7 +32,7 @@ st.title("Погодний додаток")
 city = st.text_input("Введіть місто:", "Kyiv")
 
 
-api_key = "мій апі ключ"
+api_key = "c6c8f1d7c5a3cb77f9213311afb839d3"
 
 
 weather_api = WeatherAPI(api_key=api_key)
