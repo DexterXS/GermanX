@@ -1,8 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication
-from tabs.tab_1 import *
+from tabs.tab_preposition.tab_1 import *
 from settings.log_settings import LogSettings
-
 
 
 class MainWindow(QMainWindow):
@@ -20,3 +19,4 @@ if __name__ == "__main__":
     main_window = MainWindow()
     main_window.show()
     sys.exit(app.exec_())
+

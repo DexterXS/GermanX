@@ -6,7 +6,6 @@ from qtpy import uic
 import logging
 from data.data import *
 
-
 class TabOne(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -57,23 +56,35 @@ class TabOne(QMainWindow):
                 self.set_image_for_button(button, image_path)
 
     def set_image_for_button(self, button, image_path):
-        # Загрузка изображения и установка его на кнопку
         pixmap = QPixmap(image_path)
         icon = QIcon(pixmap)
         button.setIcon(icon)
         button.setIconSize(pixmap.rect().size())
 
-    # Мозг программы который генерирует рандомный ключ и слово и выводит ошибки и верные ответы на экран
     def brain(self):
         self.random_key = random.choice(list(self.prepositions.keys()))
         self.random_wort = random.choice(self.prepositions[self.random_key])
         self.label_output.setText(self.random_wort)
         self.lcd_nummer_r.display(self.richtig)
         self.lcd_nummer_f.display(self.falsch)
-        self.label_learned.setText(self.learned)
-        self.label_not_learned.setText(self.not_learned)
+        self.label_learned.setText(str(self.learned))
+        self.label_not_learned.setText(str(self.not_learned))
 
-    # Кнопка Запуска тренировки (пока что кнопки завершения нет)
+    def handle_button_click(self, expected_key, button):
+        if self.random_key == expected_key:
+            print('Верно!')
+            self.set_button_style(button, 'green')
+            self.richtig += 1
+            logging.info(f'key={self.random_key}, Correct answer: "{expected_key}"')
+        else:
+            print('Не верно!')
+            self.set_button_style(button, 'red')
+            self.falsch += 1
+            logging.info(f'key={self.random_key}, Incorrect answer: "{expected_key}"')
+            other_button = self.button_dat if expected_key == list(self.prepositions.keys())[0] else self.button_akk_dat
+            self.set_button_style(other_button, 'green')
+        self.brain()
+
     def button_clicked_start(self):
         self.brain()
         self.button_start.setEnabled(False)
@@ -91,84 +102,34 @@ class TabOne(QMainWindow):
         self.button_akk_dat.setEnabled(False)
         self.button_dat.setEnabled(False)
         self.button_stop.setEnabled(False)
-        logging.info('Training started.')
-        pass
+        self.richtig = 0
+        self.falsch = 0
+        self.learned = 0
+        self.not_learned = 0
+        logging.info('Training stopped.')
 
-    # Кнопка обрабатывающая нажатие "Аккузатив"
     def button_clicked_akk(self):
-        if self.random_key == list(self.prepositions.keys())[0]:
-            print('Верно!')
-            self.set_button_style(self.button_akk, 'green')
-            self.richtig += 1
-            logging.info(f'key={self.random_key}, Correct answer: "{list(self.prepositions.keys())[0]}"')
-        else:
-            print('Не верно!')
-            self.set_button_style(self.button_akk, 'red')
-            self.falsch += 1
-            logging.info(f'key={self.random_key}, Incorrect answer: "{list(self.prepositions.keys())[0]}"')
-            if self.random_key == list(self.prepositions.keys())[2]:
-                self.set_button_style(self.button_dat, 'green')
-            else:
-                self.set_button_style(self.button_akk_dat, 'green')
-        self.brain()
+        self.handle_button_click(list(self.prepositions.keys())[0], self.button_akk)
 
-    # Кнопка обрабатывающая нажатие "Датив-Акузатив"
     def button_clicked_akk_dat(self):
-        if self.random_key == list(self.prepositions.keys())[1]:
-            print('Верно!')
-            self.set_button_style(self.button_akk_dat, 'green')
-            self.richtig += 1
-            logging.info(f'key={self.random_key}, Correct answer: "{list(self.prepositions.keys())[1]}"')
-        else:
-            print('Не верно!')
-            self.set_button_style(self.button_akk_dat, 'red')
-            self.falsch += 1
-            logging.info(f'key={self.random_key}, Incorrect answer: "{list(self.prepositions.keys())[1]}"')
-            if self.random_key == list(self.prepositions.keys())[0]:
-                self.set_button_style(self.button_akk, 'green')
-            else:
-                self.set_button_style(self.button_dat, 'green')
-        self.brain()
+        self.handle_button_click(list(self.prepositions.keys())[1], self.button_akk_dat)
 
-    # Кнопка обрабатывающая нажатие "Датив"
     def button_clicked_dat(self):
-        if self.random_key == list(self.prepositions.keys())[2]:
-            print('Верно!')
-            self.set_button_style(self.button_dat, 'green')
-            self.richtig += 1
-            logging.info(f'key={self.random_key}, Correct answer: "{list(self.prepositions.keys())[2]}"')
-        else:
-            print('Не верно!')
-            self.set_button_style(self.button_dat, 'red')
-            self.falsch += 1
-            logging.info(f'key={self.random_key}, Incorrect answer: "{list(self.prepositions.keys())[2]}"')
-            if self.random_key == list(self.prepositions.keys())[0]:
-                self.set_button_style(self.button_akk, 'green')
-            else:
-                self.set_button_style(self.button_akk_dat, 'green')
-
-        self.brain()
+        self.handle_button_click(list(self.prepositions.keys())[2], self.button_dat)
 
     def button_clicked_restart(self):
         self.richtig = 0
         self.falsch = 0
+        self.learned = 0
+        self.not_learned = 0
         self.brain()
 
-    # Устанавливает стиль кнопок на Красный или зеленый в зависимости от входящих данных на 300 мс
     def set_button_style(self, button, color):
-        style = ""
-        if color == 'red':
-            style = "background-color: red"
-        elif color == 'green':
-            style = "background-color: green"
+        style = f"background-color: {color}"
         button.setStyleSheet(style)
         self.timer.start(600)
 
-    # Сбрасывает все стили кнопок на основной цвет
     def reset_button_styles(self):
-        self.button_dat.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.button_akk.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.button_akk_dat.setStyleSheet("background-color: rgb(255, 255, 255);")
+        for button in [self.button_dat, self.button_akk, self.button_akk_dat]:
+            button.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.timer.stop()
-
-

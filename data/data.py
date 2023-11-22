@@ -1,3 +1,6 @@
+from PyQt5.QtCore import QTimer
+from PyQt5.QtWidgets import QPushButton, QLabel, QLCDNumber
+
 prepositions = {
             "akk": ['bis (до, until)', 'durch (через, through)', 'für (для, for)', 'ohne (без, without)', 'gegen (против, against)', 'um (вокруг, around)'],
             "akk_dat": ['in (в, in)', 'an (в, at)', 'auf (на, on)', 'neben (рядом с, next to)', 'hinter (позади, behind)', 'über (выше, above)', 'unter (под, under)', 'zwischen (между, between)', 'vor (до, before)'],
@@ -5,4 +8,3 @@ prepositions = {
         }
 inderet = ["Wissen Sie, wo ... finde?",
            "Sagen Sie mir bitte, ob der Zug nach Berlin heute Verspätung hat? (Об ставится только когда можно ответить 'да' или 'нет' )"]
-

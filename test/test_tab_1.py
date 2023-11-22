@@ -1,7 +1,6 @@
 import unittest
-from PyQt5.QtTest import QTest
 from PyQt5.QtWidgets import QApplication
-from tabs.tab_1 import TabOne
+from tabs.tab_preposition.tab_1 import TabOne
 
 class TestTabOne(unittest.TestCase):
     def setUp(self):
