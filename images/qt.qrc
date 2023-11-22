@@ -1,0 +1,11 @@
+<RCC>
+  <qresource prefix="img">
+    <file>stop.png</file>
+    <file>akk.png</file>
+    <file>akk_dat.png</file>
+    <file>dat.png</file>
+    <file>germany.png</file>
+    <file>restart.png</file>
+    <file>start.png</file>
+  </qresource>
+</RCC>

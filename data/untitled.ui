@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>680</width>
-    <height>320</height>
+    <width>450</width>
+    <height>588</height>
    </rect>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>450</width>
+    <height>640</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Lernen Deutsch</string>
@@ -20,12 +26,17 @@
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(156, 156, 156);
+background-color: rgb(255, 255, 255);
 </string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
-    <item row="1" column="0">
+    <item row="0" column="0">
      <widget class="QTabWidget" name="Preposition">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);
+border-color: rgb(0, 0, 0);</string>
+      </property>
       <property name="tabPosition">
        <enum>QTabWidget::North</enum>
       </property>
@@ -185,24 +196,89 @@
         <string>Präposotion</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_2">
-          <property name="styleSheet">
-           <string notr="true">color: rgb(0, 0, 0);</string>
+        <item row="3" column="2">
+         <widget class="QLabel" name="label_not_learned">
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+           </font>
           </property>
           <property name="text">
-           <string>Richtig:</string>
+           <string>0</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QLabel" name="label_learned">
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+         </widget>
+        </item>
+        <item row="6" column="0" colspan="5">
+         <widget class="QLabel" name="label_output">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(230, 235, 222);
+background-color: rgb(221, 230, 255);
+border-color: rgb(0, 0, 0);
+font: 16pt &quot;MS Shell Dlg 2&quot;;</string>
+          </property>
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="wordWrap">
+           <bool>false</bool>
+          </property>
+          <property name="margin">
+           <number>1</number>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="2">
+         <widget class="QLabel" name="label_6">
+          <property name="maximumSize">
+           <size>
+            <width>16777</width>
+            <height>25</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+           </font>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="text">
+           <string>Learned:</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
-          <property name="margin">
-           <number>10</number>
-          </property>
          </widget>
         </item>
-        <item row="1" column="4">
+        <item row="3" column="3">
          <widget class="QLabel" name="label">
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>Falsch:</string>
           </property>
@@ -214,61 +290,7 @@
           </property>
          </widget>
         </item>
-        <item row="3" column="0">
-         <widget class="QPushButton" name="pushButton_restart">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 0);</string>
-          </property>
-          <property name="text">
-           <string>Restart</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="3">
-         <widget class="QLCDNumber" name="lcdNumber_r">
-          <property name="sizeIncrement">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="baseSize">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
-          </property>
-          <property name="lineWidth">
-           <number>0</number>
-          </property>
-          <property name="digitCount">
-           <number>6</number>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="0">
-         <widget class="QPushButton" name="pushButton_start">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(170, 255, 0);</string>
-          </property>
-          <property name="text">
-           <string>Start</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="5">
+        <item row="3" column="4">
          <widget class="QLCDNumber" name="lcdNumber_f">
           <property name="minimumSize">
            <size>
@@ -308,97 +330,245 @@
           </property>
          </widget>
         </item>
-        <item row="6" column="5">
-         <widget class="QPushButton" name="pushButton_akk">
-          <property name="enabled">
-           <bool>false</bool>
+        <item row="1" column="4">
+         <widget class="QLCDNumber" name="lcdNumber_r">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>10</height>
+           </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>16777215</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="sizeIncrement">
-           <size>
-            <width>15</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="baseSize">
-           <size>
-            <width>2</width>
-            <height>-10354</height>
+            <width>200</width>
+            <height>50</height>
            </size>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(216, 218, 255);</string>
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
           </property>
-          <property name="text">
-           <string>Akk</string>
+          <property name="frameShape">
+           <enum>QFrame::Box</enum>
+          </property>
+          <property name="lineWidth">
+           <number>0</number>
+          </property>
+          <property name="midLineWidth">
+           <number>0</number>
+          </property>
+          <property name="smallDecimalPoint">
+           <bool>false</bool>
+          </property>
+          <property name="digitCount">
+           <number>6</number>
+          </property>
+          <property name="mode">
+           <enum>QLCDNumber::Dec</enum>
+          </property>
+          <property name="segmentStyle">
+           <enum>QLCDNumber::Filled</enum>
           </property>
          </widget>
         </item>
-        <item row="6" column="4">
-         <widget class="QPushButton" name="pushButton_akk_dat">
-          <property name="enabled">
-           <bool>false</bool>
+        <item row="1" column="3">
+         <widget class="QLabel" name="label_2">
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(0, 0, 0);</string>
+          </property>
+          <property name="text">
+           <string>Richtig:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="margin">
+           <number>10</number>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QPushButton" name="pushButton_start">
+          <property name="minimumSize">
+           <size>
+            <width>80</width>
+            <height>80</height>
+           </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>16777215</width>
-            <height>16777215</height>
+            <width>80</width>
+            <height>80</height>
            </size>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(216, 218, 255);</string>
+           <string notr="true">image: url(:/img/start.png);
+border-color: rgb(0, 0, 0);</string>
           </property>
           <property name="text">
-           <string>Akk oder Dat</string>
+           <string/>
           </property>
          </widget>
         </item>
-        <item row="6" column="3">
+        <item row="8" column="0">
          <widget class="QPushButton" name="pushButton_dat">
           <property name="enabled">
            <bool>false</bool>
           </property>
+          <property name="minimumSize">
+           <size>
+            <width>80</width>
+            <height>80</height>
+           </size>
+          </property>
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(216, 218, 255);
+           <string notr="true">background-color: rgb(255, 255, 255);
+border-color: rgb(255, 255, 255);
+image: url(:/img/dat.png);
 </string>
           </property>
           <property name="inputMethodHints">
            <set>Qt::ImhNone</set>
           </property>
           <property name="text">
-           <string>Dat</string>
+           <string/>
           </property>
          </widget>
         </item>
-        <item row="3" column="3" colspan="3">
-         <widget class="QLabel" name="label_output">
+        <item row="3" column="0" colspan="2">
+         <widget class="QLabel" name="label_8">
           <property name="maximumSize">
            <size>
-            <width>16777215</width>
-            <height>30</height>
+            <width>16777</width>
+            <height>25</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+           </font>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="text">
+           <string>Not learned:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QPushButton" name="pushButton_restart">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>80</width>
+            <height>80</height>
            </size>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(230, 235, 222);
-border-color: rgb(0, 0, 0);
-font: 16pt &quot;MS Shell Dlg 2&quot;;</string>
+           <string notr="true">background-color: rgb(255, 255, 255);
+image: url(:/img/restart.png);</string>
           </property>
           <property name="text">
-           <string>TextLabel</string>
+           <string/>
           </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-          <property name="wordWrap">
+         </widget>
+        </item>
+        <item row="0" column="4">
+         <widget class="QPushButton" name="pushButton_stop">
+          <property name="enabled">
            <bool>false</bool>
           </property>
-          <property name="margin">
-           <number>1</number>
+          <property name="minimumSize">
+           <size>
+            <width>80</width>
+            <height>80</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">image: url(:/img/stop.png);</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="4">
+         <widget class="QPushButton" name="pushButton_akk">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>80</width>
+            <height>80</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>120</width>
+            <height>120</height>
+           </size>
+          </property>
+          <property name="sizeIncrement">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="baseSize">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);
+image: url(:/img/akk.png);</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="2">
+         <widget class="QPushButton" name="pushButton_akk_dat">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>80</width>
+            <height>80</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>120</width>
+            <height>120</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);
+image: url(:/img/akk_dat.png);</string>
+          </property>
+          <property name="text">
+           <string/>
           </property>
          </widget>
         </item>
@@ -494,6 +664,7 @@ font: 16pt &quot;MS Shell Dlg 2&quot;;</string>
  </widget>
  <resources>
   <include location="qt.qrc"/>
+  <include location="../images/qt.qrc"/>
  </resources>
  <connections/>
 </ui>
