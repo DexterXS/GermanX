@@ -1,21 +1,44 @@
 import streamlit as st
-import numpy as np
+import requests
 
-# Создаем случайные данные
-np.random.seed(42)
-data = np.random.randn(100, 2)
+class WeatherAPI:
+    def init(self, api_key):
+        self.api_key = api_key
+        self.base_url = "http://api.openweathermap.org/data/2.5/weather"
 
-# Заголовок приложения
-st.title('Пример Streamlit без сторонних библиотек')
+    def get_weather(self, city):
+        params = {"q": city, "appid": self.api_key, "units": "metric"}
+        try:
+            response = requests.get(self.base_url, params=params)
+            response.raise_for_status()
 
-# Выводим таблицу данных
-st.write('Случайные данные:', data)
+            data = response.json()
+            return data
+        except requests.exceptions.HTTPError as errh:
+            st.error(f"HTTP Error: {errh}")
+            return None
+        except requests.exceptions.RequestException as err:
+            st.error(f"Request Exception: {err}")
+            return None
+        except requests.exceptions.JSONDecodeError as err:
+            st.error(f"JSON Decode Error: {err}")
+            st.error(f"Response Text: {response.text}")
+            return None
 
-# Выводим график с использованием встроенных средств Streamlit
-st.line_chart(data)
 
-# Добавляем интерактивные элементы управления
-selected_rows = st.multiselect('Выберите строки', list(range(100)))
-if selected_rows:
-    st.write('Выбранные строки:')
-    st.write(data[selected_rows])
+st.title("Погодний додаток")
+
+
+city = st.text_input("Введіть місто:", "Kyiv")
+
+
+api_key = "мій апі ключ"
+
+
+weather_api = WeatherAPI(api_key=api_key)
+
+
+weather_data = weather_api.get_weather(city)
+if weather_data:
+    temperature = weather_data["main"]["temp"]
+    st.write(f"Погода у {city}: {temperature}°C")
