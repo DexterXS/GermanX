@@ -1,26 +1,21 @@
 import streamlit as st
-import plotly.express as px
-import pandas as pd
 import numpy as np
 
-# Создаем случайные данные для графика
+# Создаем случайные данные
 np.random.seed(42)
-data = pd.DataFrame({
-    'x': np.random.rand(100),
-    'y': np.random.rand(100),
-    'size': np.random.rand(100) * 10,
-    'color': np.random.rand(100)
-})
+data = np.random.randn(100, 2)
 
 # Заголовок приложения
-st.title('Пример Streamlit с Plotly')
+st.title('Пример Streamlit без сторонних библиотек')
 
-# Выводим график с использованием Plotly Express
-fig = px.scatter(data, x='x', y='y', size='size', color='color', opacity=0.7, title='Пример графика')
-st.plotly_chart(fig)
+# Выводим таблицу данных
+st.dataframe(data, label='Случайные данные')
+
+# Выводим график с использованием встроенных средств Streamlit
+st.line_chart(data)
 
 # Добавляем интерактивные элементы управления
-selected_points = st.multiselect('Выберите точки', data.index)
-if selected_points:
-    st.write('Выбранные точки:')
-    st.write(data.loc[selected_points])
+selected_rows = st.multiselect('Выберите строки', list(range(100)))
+if selected_rows:
+    st.write('Выбранные строки:')
+    st.write(data[selected_rows])
