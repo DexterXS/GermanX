@@ -56,7 +56,7 @@ border-color: rgb(0, 0, 0);</string>
        <enum>QTabWidget::Triangular</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tab_2">
        <attribute name="title">
@@ -665,6 +665,16 @@ image: url(:/img/akk_dat.png);</string>
         <string>Add new word</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="6">
+         <widget class="QFrame" name="frame_6">
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+         </widget>
+        </item>
         <item row="0" column="0">
          <widget class="QLabel" name="label_5">
           <property name="maximumSize">
@@ -681,17 +691,8 @@ image: url(:/img/akk_dat.png);</string>
           <property name="text">
            <string>Art.</string>
           </property>
-         </widget>
-        </item>
-        <item row="0" column="1" colspan="2">
-         <widget class="QLabel" name="label_4">
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>Word</string>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
@@ -707,18 +708,23 @@ image: url(:/img/akk_dat.png);</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="4">
-         <widget class="QFrame" name="frame_5">
-          <property name="frameShape">
-           <enum>QFrame::StyledPanel</enum>
+        <item row="0" column="1" colspan="2">
+         <widget class="QLabel" name="label_4">
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+           </font>
           </property>
-          <property name="frameShadow">
-           <enum>QFrame::Raised</enum>
+          <property name="text">
+           <string>Word</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QLineEdit" name="lineEdit_2">
+         <widget class="QLineEdit" name="lineEdit_art">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -729,19 +735,6 @@ image: url(:/img/akk_dat.png);</string>
            <size>
             <width>50</width>
             <height>16777215</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1" colspan="2">
-         <widget class="QLineEdit" name="lineEdit">
-          <property name="minimumSize">
-           <size>
-            <width>150</width>
-            <height>40</height>
            </size>
           </property>
           <property name="styleSheet">
@@ -762,24 +755,21 @@ image: url(:/img/akk_dat.png);</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="4">
-         <widget class="QFrame" name="frame_7">
+        <item row="1" column="1" colspan="2">
+         <widget class="QLineEdit" name="lineEdit">
           <property name="minimumSize">
            <size>
-            <width>200</width>
-            <height>0</height>
+            <width>150</width>
+            <height>40</height>
            </size>
           </property>
-          <property name="frameShape">
-           <enum>QFrame::StyledPanel</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Raised</enum>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="0" colspan="2">
-         <widget class="QPushButton" name="pushButton_4">
+        <item row="3" column="0" colspan="2">
+         <widget class="QPushButton" name="pushButton_save_word">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -796,7 +786,32 @@ image: url(:/img/akk_dat.png);</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="2" colspan="2">
+        <item row="4" column="0" colspan="6">
+         <widget class="QFrame" name="frame_2">
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_10">
+           <item row="0" column="0">
+            <widget class="QListView" name="listView"/>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="0" column="5">
+         <widget class="QFrame" name="frame_5">
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="2" colspan="2">
          <widget class="QFrame" name="frame_3">
           <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
@@ -806,7 +821,7 @@ image: url(:/img/akk_dat.png);</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_6">
            <item row="0" column="0">
-            <widget class="QPushButton" name="pushButton_10">
+            <widget class="QPushButton" name="pushButton_delete_word">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -838,7 +853,7 @@ image: url(:/img/akk_dat.png);</string>
           </layout>
          </widget>
         </item>
-        <item row="2" column="4">
+        <item row="3" column="5">
          <widget class="QFrame" name="frame_4">
           <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
@@ -848,23 +863,45 @@ image: url(:/img/akk_dat.png);</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="5">
-         <widget class="QFrame" name="frame_6">
+        <item row="1" column="4">
+         <widget class="QFrame" name="frame_7">
+          <property name="minimumSize">
+           <size>
+            <width>150</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>50</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
           </property>
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
           </property>
+          <layout class="QGridLayout" name="gridLayout_9">
+           <item row="0" column="0">
+            <widget class="QComboBox" name="comboBox"/>
+           </item>
+          </layout>
          </widget>
         </item>
-        <item row="3" column="0" colspan="6">
-         <widget class="QFrame" name="frame_2">
-          <property name="frameShape">
-           <enum>QFrame::StyledPanel</enum>
+        <item row="0" column="4">
+         <widget class="QLabel" name="label_6">
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+           </font>
           </property>
-          <property name="frameShadow">
-           <enum>QFrame::Raised</enum>
+          <property name="text">
+           <string>Type</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
