@@ -10,7 +10,7 @@ class MainWindow(QMainWindow):
         self.tab_one = TabOne()
         self.setCentralWidget(self.tab_one)
         self.tab_one.button_start.clicked.connect(self.tab_one.button_clicked_start)
-        self.resize(450, 640)
+        self.setFixedSize(450, 640)
 
 
 if __name__ == "__main__":

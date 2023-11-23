@@ -27,8 +27,10 @@ class TabOne(QMainWindow):
         self.button_akk_dat.clicked.connect(self.button_clicked_akk_dat)
         self.label_output = self.findChild(QLabel, "label_output")
         self.label_output.setText("Нажмите старт")
-        self.label_learned = self.findChild(QLabel, "label_learned")
-        self.label_not_learned = self.findChild(QLabel, "label_not_learned")
+        self.lcd_nummer_learned = self.findChild(QLCDNumber, "lcdNumber_learned")
+        self.lcd_nummer_learned.display(0)
+        self.lcd_nummer_not_learned = self.findChild(QLCDNumber, "lcdNumber_not_learned")
+        self.lcd_nummer_not_learned.display(0)
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.reset_button_styles)
         self.lcd_nummer_r = self.findChild(QLCDNumber, "lcdNumber_r")
@@ -67,8 +69,8 @@ class TabOne(QMainWindow):
         self.label_output.setText(self.random_wort)
         self.lcd_nummer_r.display(self.richtig)
         self.lcd_nummer_f.display(self.falsch)
-        self.label_learned.setText(str(self.learned))
-        self.label_not_learned.setText(str(self.not_learned))
+        self.lcd_nummer_learned.display(self.learned)
+        self.lcd_nummer_not_learned.display(self.not_learned)
 
     def handle_button_click(self, expected_key, button):
         if self.random_key == expected_key:
@@ -88,24 +90,23 @@ class TabOne(QMainWindow):
     def button_clicked_start(self):
         self.brain()
         self.button_start.setEnabled(False)
-        self.button_restart.setEnabled(True)
-        self.button_akk.setEnabled(True)
-        self.button_akk_dat.setEnabled(True)
-        self.button_dat.setEnabled(True)
-        self.button_stop.setEnabled(True)
+        for button in [self.button_restart, self.button_akk, self.button_akk_dat, self.button_dat, self.button_stop]:
+            button.setEnabled(True)
         logging.info('Training started.')
 
     def button_clicked_stop(self):
         self.button_start.setEnabled(True)
-        self.button_restart.setEnabled(False)
-        self.button_akk.setEnabled(False)
+        """self.button_akk.setEnabled(False)
         self.button_akk_dat.setEnabled(False)
         self.button_dat.setEnabled(False)
-        self.button_stop.setEnabled(False)
-        self.richtig = 0
-        self.falsch = 0
-        self.learned = 0
-        self.not_learned = 0
+        self.button_stop.setEnabled(False)"""
+        for button in [self.button_restart, self.button_akk, self.button_akk_dat, self.button_dat, self.button_stop]:
+            button.setEnabled(False)
+        self.button_clicked_restart()
+        self.lcd_nummer_f.display(self.richtig)
+        self.lcd_nummer_r.display(self.falsch)
+        self.lcd_nummer_not_learned.display(self.not_learned)
+        self.lcd_nummer_learned.display(self.learned)
         logging.info('Training stopped.')
 
     def button_clicked_akk(self):
