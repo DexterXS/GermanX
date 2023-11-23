@@ -1,80 +1,80 @@
 import streamlit as st
-import random
+import requests
+import pandas as pd
+import matplotlib.pyplot as plt
+import plotly.express as px
 
 
-class Card:
-    def __init__(self, term, translation, category):
-        self.term = term
-        self.translation = translation
-        self.category = category
+def get_weather(api_key, city, units):
+    try:
+        response = requests.get(
+            f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units={units}")
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as err:
+        st.error(f"Помилка отримання погоди: {err}")
+        return None
 
 
-class FlashcardApp:
-    def __init__(self):
-        if 'flashcards' not in st.session_state:
-            st.session_state.flashcards = []
+def get_weekly_forecast(api_key, city):
+    try:
+        response = requests.get(
+            f"http://api.openweathermap.org/data/2.5/forecast?q={city}&appid={api_key}&units=metric&cnt=56")
+        response.raise_for_status()
+        return response.json()["list"]
+    except requests.exceptions.RequestException as err:
+        st.error(f"Помилка отримання тижневого прогнозу: {err}")
+        return None
 
-    def add_flashcard(self):
-        term = st.text_input("Термін:")
-        translation = st.text_input("Переклад:")
-        category = st.text_input("Категорія:")
 
-        if term and translation and category:
-            st.session_state.flashcards.append(Card(term, translation, category))
-            st.success("Картку додано!")
+def display_weather(city, weather_data, units):
+    main_data = weather_data.get("main", {})
+    weather_info = weather_data.get("weather", [{}])[0]
+    st.write(f"Погода у {city} зараз:", f"Температура: {main_data.get('temp')}°{units[0]}",
+             f"Стан: {weather_info.get('description').capitalize()}", f"Вологість: {main_data.get('humidity')}%",
+             f"Швидкість вітру: {weather_data.get('wind', {}).get('speed')} м/с")
 
-    def study_flashcards(self):
-        if not st.session_state.flashcards:
-            st.warning("Додайте картку перед вивченням.")
-            return
 
-        random_card = random.choice(st.session_state.flashcards)
-        user_translation = st.text_input(f"Як перекладеться '{random_card.term}'?")
+def display_weekly_forecast(city, forecast_data):
+    data = [{"Дата": item["dt_txt"], "Температура": f"{item['main']['temp']}°C",
+             "Стан": item['weather'][0]['description'].capitalize()} for item in forecast_data]
+    df = pd.DataFrame(data)
+    st.write(f"Тижневий прогноз погоди для {city}:")
+    st.table(df)
 
-        if user_translation:
-            if user_translation.lower() == random_card.translation.lower():
-                st.success("Вірно!")
-            else:
-                st.error(f"Правильний переклад: {random_card.translation}")
 
-    def view_all_flashcards(self):
-        if not st.session_state.flashcards:
-            st.warning("Додайте картку перед переглядом.")
-            return
+def display_weekly_temperature_chart(city, forecast_data):
+    data = [{"Дата": item["dt_txt"], "Температура": item["main"]["temp"]} for item in forecast_data]
+    df = pd.DataFrame(data)
 
-        st.header("Всі картки")
-        for card in st.session_state.flashcards:
-            st.button(f"{card.term}\nПереклад: {card.translation}\nКатегорія: {card.category}")
-
-    def choose_category(self):
-        categories = list(set(card.category for card in st.session_state.flashcards))
-        selected_category = st.selectbox("Виберіть категорію:", ["Всі"] + categories)
-
-        selected_flashcards = st.session_state.flashcards if selected_category == "Всі" else [
-            card for card in st.session_state.flashcards if card.category == selected_category
-        ]
-
-        st.header(f"Картки в категорії: {selected_category}")
-        for card in selected_flashcards:
-            st.button(f"{card.term}\nПереклад: {card.translation}")
+    fig = px.line(df, x="Дата", y="Температура", title=f"Температурний режим у {city} на тиждень")
+    fig.update_xaxes(type='category', categoryorder='array', categoryarray=['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'])
+    st.plotly_chart(fig)
 
 
 def main():
-    st.title("Додаток з мовними картками")
+    st.title("Погодний та Графічний додаток")
+    api_key = "ваш_фактичний_ключ_api"
+    city = st.selectbox("Виберіть місто:", ["Kyiv", "New York", "Tokyo", "London"])
+    units = st.radio("Одиниці вимірювання:", ["Цельсій", "Фаренгейт"])
 
-    app = FlashcardApp()
+    if st.button("Отримати погоду"):
+        weather_data = get_weather(api_key, city, "metric" if units == "Цельсій" else "imperial")
+        if weather_data:
+            display_weather(city, weather_data, units)
 
-    menu = ["Додати картку", "Вивчати картки", "Переглянути всі картки", "Вибрати картки за категорією"]
-    choice = st.sidebar.selectbox("Виберіть опцію", menu)
+    if st.button("Тижневий прогноз"):
+        forecast_data = get_weekly_forecast(api_key, city)
+        if forecast_data:
+            display_weekly_forecast(city, forecast_data)
 
-    if choice == "Додати картку":
-        app.add_flashcard()
-    elif choice == "Вивчати картки":
-        app.study_flashcards()
-    elif choice == "Переглянути всі картки":
-        app.view_all_flashcards()
-    elif choice == "Вибрати картки за категорією":
-        app.choose_category()
+    if st.button("Тижневий графік температур"):
+        forecast_data = get_weekly_forecast(api_key, city)
+        if forecast_data:
+            display_weekly_temperature_chart(city, forecast_data)
+
+    if st.button("Оновити погоду"):
+        st.experimental_rerun()
 
 
 if __name__ == "__main__":
