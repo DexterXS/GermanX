@@ -1,5 +1,8 @@
 <RCC>
   <qresource prefix="img">
+    <file>das.png</file>
+    <file>der.png</file>
+    <file>die.png</file>
     <file>stop.png</file>
     <file>akk.png</file>
     <file>akk_dat.png</file>

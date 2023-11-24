@@ -29,6 +29,7 @@ class TabOne(QMainWindow):
         self.prepositions = prepositions
         self.training_in_progress = False
         self.timer = QTimer(self)
+        self.word_data = []
         self.timer.timeout.connect(self.reset_button_styles)
 
         # params tab 2 and 3
@@ -56,9 +57,36 @@ class TabOne(QMainWindow):
             "pushButton_akk": './images/akk.png',
             "pushButton_dat": './images/dat.png',
             "pushButton_akk_dat": './images/akk_dat.png',
-            "pushButton_stop": './images/stop.png'
+            "pushButton_stop": './images/stop.png',
+            "pushButton_art_der": './images/der.png',
+            "pushButton_art_die": './images/die.png',
+            "pushButton_art_das": './images/das.png',
+
         }
         # buttons tab 2
+        self.button_art_start = self.findChild(QPushButton, "pushButton_art_start")
+        self.button_art_start.clicked.connect(self.button_clicked_art_start)
+
+        self.button_art_stop = self.findChild(QPushButton, "pushButton_art_stop")
+        self.button_art_stop.clicked.connect(self.button_clicked_art_stop)
+
+        self.button_art_restart = self.findChild(QPushButton, "pushButton_art_restart")
+        self.button_art_restart.clicked.connect(self.button_clicked_art_restart)
+
+        self.button_art_der = self.findChild(QPushButton, "pushButton_art_der")
+        self.button_art_der.clicked.connect(self.button_clicked_art_der)
+
+        self.button_art_die = self.findChild(QPushButton, "pushButton_art_die")
+        self.button_art_die.clicked.connect(self.button_clicked_art_die)
+
+        self.button_art_das = self.findChild(QPushButton, "pushButton_art_das")
+        self.button_art_das.clicked.connect(self.button_clicked_art_das)
+
+        # labels tab 2
+        self.label_art = self.findChild(QLabel, "label_art")
+        self.label_art.setText("Click start")
+
+        # buttons tab 3
         self.save_word = self.findChild(QPushButton, "pushButton_save_word")
         self.save_word.clicked.connect(self.button_save_word)
         self.delete_word = self.findChild(QPushButton, "pushButton_delete_word")
@@ -114,6 +142,17 @@ class TabOne(QMainWindow):
         self.lcd_nummer_not_learned.display(self.not_learned)
         self.lcd_nummer_learned.display(self.learned)
 
+    def read_data_from_json_for_art(self):
+        print("открываем json")
+        with open(self.filename, 'r', encoding='utf-8') as file:
+            self.data_art_word = json.load(file)
+            print(f"____Получаем: {self.data_art_word}")
+        return self.data_art_word
+
+    def brain_art(self):
+        random_art_word = random.choice(self.word_data)
+        return self.label_art.setText(f"{random_art_word['word']}")
+
     def handle_button_click(self, expected_key, button):
         if self.random_key == expected_key:
             self.set_button_style(button, 'green')
@@ -133,17 +172,29 @@ class TabOne(QMainWindow):
         self.brain()
 
     def button_clicked_start(self):
-        self.brain()
+        self.brain_art()
         self.button_start.setEnabled(False)
         for button in [self.button_restart, self.button_akk, self.button_akk_dat, self.button_dat, self.button_stop]:
             button.setEnabled(True)
-            logging.debug(f'{button} setEnabled "True"')
+            logging.debug(f'____{button} setEnabled "True"')
+
+    def button_clicked_art_start(self):
+        print("Click Start")
+        self.button_art_start.setEnabled(False)
+        for button in [self.button_art_restart,
+                       self.button_art_der,
+                       self.button_art_die,
+                       self.button_art_das,
+                       self.button_art_stop]:
+            button.setEnabled(True)
+            logging.debug(f'____{button} setEnabled "True"')
 
     def button_clicked_stop(self):
         self.button_start.setEnabled(True)
         for button in [self.button_restart, self.button_akk, self.button_akk_dat, self.button_dat, self.button_stop]:
             button.setEnabled(False)
             logging.debug(f'{button} setEnabled "False"')
+
         self.button_clicked_restart()
         self.lcd_nummer_f.display(self.richtig)
         self.lcd_nummer_r.display(self.falsch)
@@ -151,6 +202,26 @@ class TabOne(QMainWindow):
         self.lcd_nummer_learned.display(self.learned)
         self.label_output.setText("Click start")
         logging.info('Training stopped.')
+
+    def button_clicked_art_stop(self):
+        self.button_art_start.setEnabled(True)
+        for button in [self.button_art_restart,
+                       self.button_art_der,
+                       self.button_art_die,
+                       self.button_art_das,
+                       self.button_art_stop]:
+            button.setEnabled(False)
+
+    def button_clicked_restart(self):
+        self.richtig = 0
+        self.falsch = 0
+        self.learned = 0
+        self.not_learned = self.count_total_words(prepositions)
+        self.brain()
+        logging.debug('Click button restart.')
+
+    def button_clicked_art_restart(self):
+        logging.debug('Click button restart.')
 
     def button_clicked_akk(self):
         self.handle_button_click(list(self.prepositions.keys())[0], self.button_akk)
@@ -164,13 +235,14 @@ class TabOne(QMainWindow):
         self.handle_button_click(list(self.prepositions.keys())[2], self.button_dat)
         logging.debug('Click button Dat.')
 
-    def button_clicked_restart(self):
-        self.richtig = 0
-        self.falsch = 0
-        self.learned = 0
-        self.not_learned = self.count_total_words(prepositions)
-        self.brain()
-        logging.debug('Click button restart.')
+    def button_clicked_art_der(self):
+        logging.debug('Click button der.')
+
+    def button_clicked_art_die(self):
+        logging.debug('Click button der.')
+
+    def button_clicked_art_das(self):
+        logging.debug('Click button der.')
 
     def set_button_style(self, button, color):
         style = f"background-color: {color}"
@@ -181,7 +253,7 @@ class TabOne(QMainWindow):
     def reset_button_styles(self):
         for button in [self.button_dat, self.button_akk, self.button_akk_dat]:
             button.setStyleSheet("background-color: rgb(100, 100, 100);")
-            logging.debug(f'{button} set background-color: rgb(100, 100, 100);')
+            logging.debug(f'____{button} set background-color: rgb(100, 100, 100);')
         self.timer.stop()
         logging.debug('Reset button style.')
 
@@ -201,9 +273,9 @@ class TabOne(QMainWindow):
                     self.words_model.clear()
                     return []
 
-                word_data = json.load(f)
+                self.word_data = json.load(f)
                 self.words_model.clear()
-                for item in word_data:
+                for item in self.word_data:
                     art_text = item.get("art", "")
                     word_text = item.get("word", "")
                     end_text = item.get("end", "")
@@ -212,7 +284,7 @@ class TabOne(QMainWindow):
                     new_item = QStandardItem(f"{art_text}/{word_text}/{end_text} ({type_text})")
                     self.words_model.appendRow(new_item)
 
-                return word_data
+                return self.word_data
         except FileNotFoundError:
             print("Файл не найден. Создание нового файла.")
             with open(self.full_path, "w", encoding="utf-8"):
@@ -240,7 +312,7 @@ class TabOne(QMainWindow):
 
         else:
             end_text = end_text.lower()
-        if type_text in ["Nominativ", "Artikel", "Pronomen"] :
+        if type_text in ["Nominativ", "Artikel", "Pronomen"]:
             word_text = word_text.capitalize()
         else:
             word_text = word_text.lower()
