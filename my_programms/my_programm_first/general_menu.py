@@ -157,7 +157,7 @@ class TabOne(QMainWindow):
     # Method that generates random words for tab 2
     def brain_art(self):
         random_art_word = random.choice(self.word_data)
-        print(random_art_word)
+        logging.debug(f"brain_art: random_art_word(list) => {random_art_word}")
         self.lcd_nummer_art_right.display(self.art_right)
         self.lcd_nummer_art_wrong.display(self.art_wrong)
         self.art_art_random_selected = random_art_word['art']
@@ -179,14 +179,24 @@ class TabOne(QMainWindow):
             logging.info(f'key={self.random_key}, '
                          f'Correct: "{expected_key}" richtig: {self.richtig} grade: {grade}')
             prepositions[category][index_in_category][1] = grade # Update the score for each word separately + 1
+            logging.debug(f"first: {expected_key} == {self.random_key}")
         else:
+            logging.debug(f"first: {self.random_key} != {expected_key}")
             self.set_button_style(button, 'red')
             self.falsch += 1
             if grade <= 9:
                 grade -= 3
             logging.info(f'key={self.random_key}, '
                          f'Incorrect: "{expected_key}" falsch: {self.falsch} grade: {grade}')
-            other_button = self.button_dat if expected_key == list(self.prepositions.keys())[0] else self.button_akk_dat
+            if self.random_key == list(self.prepositions.keys())[0]:
+                logging.debug(f"second: {self.random_key} == {list(self.prepositions.keys())[0]} Красим акк в зеленый")
+                other_button = self.button_akk
+            elif self.random_key == list(self.prepositions.keys())[1]:
+                logging.debug(f"second: {self.random_key} elif {list(self.prepositions.keys())[1]} Красим акк-датив в зеленый")
+                other_button = self.button_akk_dat
+            else:
+                logging.debug(f"third: {self.random_key} != {list(self.prepositions.keys())[2]} Красим датив в зеленый")
+                other_button = self.button_dat
             self.set_button_style(other_button, 'green')
             prepositions[category][index_in_category][1] = grade # Update the score for each word separately - 3
         self.move_key_value_list(self.prepositions, self.prepositions_learned, expected_key, 0)
@@ -197,10 +207,10 @@ class TabOne(QMainWindow):
     def handle_button_click_for_art(self, expected_key=''):
         if self.art_art_random_selected == expected_key:
             self.art_right += 1
-            print(f"{self.art_art_random_selected} = {expected_key}")
+            logging.debug(f"handle_button_click_for_art: {self.art_art_random_selected} = {expected_key}")
         else:
             self.art_wrong += 1
-            print(f"{self.art_art_random_selected} != {expected_key}")
+            logging.debug(f"{self.art_art_random_selected} != {expected_key}")
         self.brain_art()
 
     # Method that enables tab 1 and disables buttons
