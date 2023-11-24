@@ -5,4 +5,4 @@
 /data/confidential_data.py
 
 # Исключаем файлы
-/data/data_deutsch_word.py
+/data/data_deutsch_word.json

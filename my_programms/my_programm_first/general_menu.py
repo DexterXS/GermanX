@@ -31,7 +31,7 @@ class TabOne(QMainWindow):
         self.timer.timeout.connect(self.reset_button_styles)
 
         # params tab 2 and 3
-        self.filename = "data_deutsch_word"
+        self.filename = "data_deutsch_word.json"
         self.full_path = os.path.join('./data', self.filename)
         self.words_model = QStandardItemModel()
         self.words = self.load_words()

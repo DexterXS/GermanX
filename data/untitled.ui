@@ -55,7 +55,7 @@ color: rgb(227, 227, 227);</string>
        <enum>QTabWidget::Triangular</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_2">
        <property name="styleSheet">
@@ -984,7 +984,8 @@ image: url(:/img/akk.png);</string>
            </font>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
+           <string notr="true">color: rgb(45, 45, 45);
+background-color: rgb(179, 179, 179);</string>
           </property>
          </widget>
         </item>
@@ -1002,7 +1003,8 @@ image: url(:/img/akk.png);</string>
            </font>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
+           <string notr="true">background-color: rgb(179, 179, 179);
+color: rgb(45, 45, 45);</string>
           </property>
          </widget>
         </item>
@@ -1020,7 +1022,8 @@ image: url(:/img/akk.png);</string>
            </font>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
+           <string notr="true">color: rgb(45, 45, 45);
+background-color: rgb(179, 179, 179);</string>
           </property>
          </widget>
         </item>
@@ -1154,8 +1157,8 @@ image: url(:/img/akk.png);</string>
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(72, 72, 72);</string>
+              <string notr="true">color: rgb(45, 45, 45);
+background-color: rgb(179, 179, 179);</string>
              </property>
             </widget>
            </item>
