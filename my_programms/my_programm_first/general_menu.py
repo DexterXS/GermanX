@@ -83,8 +83,8 @@ class TabOne(QMainWindow):
         self.button_art_das.clicked.connect(self.button_clicked_art_das)
 
         # labels tab 2
-        self.label_art = self.findChild(QLabel, "label_art")
-        self.label_art.setText("Click start")
+        self.label_art_word = self.findChild(QLabel, "label_art_word")
+        self.label_art_word.setText("Click start")
 
         # buttons tab 3
         self.save_word = self.findChild(QPushButton, "pushButton_save_word")
@@ -150,8 +150,9 @@ class TabOne(QMainWindow):
         return self.data_art_word
 
     def brain_art(self):
+        print("Мозг запущен!")
         random_art_word = random.choice(self.word_data)
-        return self.label_art.setText(f"{random_art_word['word']}")
+        return self.label_art_word.setText(f"{random_art_word['word']}")
 
     def handle_button_click(self, expected_key, button):
         if self.random_key == expected_key:
@@ -180,6 +181,7 @@ class TabOne(QMainWindow):
 
     def button_clicked_art_start(self):
         print("Click Start")
+        self.brain_art()
         self.button_art_start.setEnabled(False)
         for button in [self.button_art_restart,
                        self.button_art_der,
@@ -239,10 +241,10 @@ class TabOne(QMainWindow):
         logging.debug('Click button der.')
 
     def button_clicked_art_die(self):
-        logging.debug('Click button der.')
+        logging.debug('Click button die.')
 
     def button_clicked_art_das(self):
-        logging.debug('Click button der.')
+        logging.debug('Click button das.')
 
     def set_button_style(self, button, color):
         style = f"background-color: {color}"

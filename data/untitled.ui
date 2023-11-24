@@ -714,7 +714,7 @@ image: url(:/img/akk.png);</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_14">
            <item row="0" column="0">
-            <widget class="QLabel" name="label_art">
+            <widget class="QLabel" name="label_art_word">
              <property name="minimumSize">
               <size>
                <width>0</width>
