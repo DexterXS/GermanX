@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="img">
+    <file>minus.png</file>
     <file>das.png</file>
     <file>der.png</file>
     <file>die.png</file>

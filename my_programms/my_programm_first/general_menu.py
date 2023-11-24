@@ -22,8 +22,11 @@ class TabOne(QMainWindow):
         # params tab 1
         self.richtig = 0
         self.falsch = 0
+        self.art_right = 0
+        self.art_wrong = 0
         self.learned = 0
         self.art_word_grade = 0
+        self.art_art_random_selected  = '' # random word for tab 2
         self.full_path = ''
         self.not_learned = self.count_total_words(prepositions)
         self.random_key = None
@@ -66,6 +69,7 @@ class TabOne(QMainWindow):
             "pushButton_art_der": './images/der.png',
             "pushButton_art_die": './images/die.png',
             "pushButton_art_das": './images/das.png',
+            "pushButton_art_minus": './images/minus.png'
 
         }
         # buttons tab 2
@@ -73,8 +77,8 @@ class TabOne(QMainWindow):
         self.button_art_start.clicked.connect(self.button_clicked_art_start)
         self.button_art_stop = self.findChild(QPushButton, "pushButton_art_stop")
         self.button_art_stop.clicked.connect(self.button_clicked_art_stop)
-        self.button_art_restart = self.findChild(QPushButton, "pushButton_art_restart")
-        self.button_art_restart.clicked.connect(self.button_clicked_art_restart)
+        self.button_art_minus = self.findChild(QPushButton, "pushButton_art_minus")
+        self.button_art_minus.clicked.connect(self.button_clicked_art_minus)
         self.button_art_der = self.findChild(QPushButton, "pushButton_art_der")
         self.button_art_der.clicked.connect(self.button_clicked_art_der)
         self.button_art_die = self.findChild(QPushButton, "pushButton_art_die")
@@ -105,6 +109,12 @@ class TabOne(QMainWindow):
         self.lcd_nummer_r.display(0)
         self.lcd_nummer_f = self.findChild(QLCDNumber, "lcdNumber_f")
         self.lcd_nummer_f.display(0)
+
+        # lcd nummer tab 2
+        self.lcd_nummer_art_right = self.findChild(QLCDNumber, "lcdNumber_art_right")
+        self.lcd_nummer_art_right.display(0)
+        self.lcd_nummer_art_wrong = self.findChild(QLCDNumber, "lcdNumber_art_wrong")
+        self.lcd_nummer_art_wrong.display(0)
 
         # input data tab 3
         self.art_word = self.findChild(QLineEdit, "lineEdit_art_word")
@@ -147,8 +157,13 @@ class TabOne(QMainWindow):
     # Method that generates random words for tab 2
     def brain_art(self):
         random_art_word = random.choice(self.word_data)
-        logging.debug(f'generated random wort: {random_art_word}')
+        print(random_art_word)
+        self.lcd_nummer_art_right.display(self.art_right)
+        self.lcd_nummer_art_wrong.display(self.art_wrong)
+        self.art_art_random_selected = random_art_word['art']
+        logging.debug(f'generated random wort: {self.art_art_random_selected}')
         return self.label_art_word.setText(f"{random_art_word['word']}")
+
 
     # A method that counts the correct answers, controls the color of the buttons,
     # counts the score for both correct
@@ -179,6 +194,15 @@ class TabOne(QMainWindow):
 
         self.brain()
 
+    def handle_button_click_for_art(self, expected_key=''):
+        if self.art_art_random_selected == expected_key:
+            self.art_right += 1
+            print(f"{self.art_art_random_selected} = {expected_key}")
+        else:
+            self.art_wrong += 1
+            print(f"{self.art_art_random_selected} != {expected_key}")
+        self.brain_art()
+
     # Method that enables tab 1 and disables buttons
     def button_clicked_start(self):
         logging.debug(f'Start Click "button_clicked_start"')
@@ -194,7 +218,7 @@ class TabOne(QMainWindow):
         logging.debug(f'Start Click "button_clicked_art_start"')
         self.brain_art()
         self.button_art_start.setEnabled(False)
-        for button in [self.button_art_restart,
+        for button in [self.button_art_minus,
                        self.button_art_der,
                        self.button_art_die,
                        self.button_art_das,
@@ -219,7 +243,7 @@ class TabOne(QMainWindow):
     # The method that is called by pressing the button restart tab 1, to reset the results
     def button_clicked_art_stop(self):
         self.button_art_start.setEnabled(True)
-        for button in [self.button_art_restart,
+        for button in [self.button_art_minus,
                        self.button_art_der,
                        self.button_art_die,
                        self.button_art_das,
@@ -236,8 +260,9 @@ class TabOne(QMainWindow):
         logging.debug('Click button restart.')
 
     # The method that is called by pressing the button restart tab 2, to reset the results
-    def button_clicked_art_restart(self):
-        logging.debug('Click button restart.')
+    def button_clicked_art_minus(self):
+        self.handle_button_click_for_art(expected_key='-')
+        logging.debug('Click button minus.')
 
     # The method that is called by pressing the button akk tab 1
     def button_clicked_akk(self):
@@ -256,15 +281,17 @@ class TabOne(QMainWindow):
 
     # The method that is called by pressing the button der tab 2
     def button_clicked_art_der(self):
-
+        self.handle_button_click_for_art(expected_key='Der')
         logging.debug('Click button der.')
 
     # The method that is called by typing the button die tab 2
     def button_clicked_art_die(self):
+        self.handle_button_click_for_art(expected_key='Die')
         logging.debug('Click button die.')
 
     # The method that is called by pressing the button das tab 2
     def button_clicked_art_das(self):
+        self.handle_button_click_for_art(expected_key='Das')
         logging.debug('Click button das.')
 
     # The method that sets the color of the buttons when clicking (scrolling) tab 1
@@ -324,14 +351,14 @@ class TabOne(QMainWindow):
 
     # Method that is called by pressing the button to process the word before saving (Tab 3)
     def button_save_word(self):
-        art_text = str(self.art_word.text()).strip()
+        art_text = str(self.art_word.text()).strip().capitalize()
         word_text = str(self.word.text()).strip()
         end_text = str(self.end_word.text()).strip().replace("-", "")
         type_text = str(self.combo_box.currentText()).strip()
         if word_text == "":
             self.show_message("Error", text="The 'word' field must not be empty.")
             return
-        if art_text.strip() == "":
+        if art_text == "":
             art_text = "-"
         elif len(art_text) > 3:
             self.show_message("Error", text="The article cannot be more than 3 characters.")
@@ -354,6 +381,9 @@ class TabOne(QMainWindow):
             self.words_model.appendRow(new_item)
         else:
             self.show_message("Error", "The word already exists.")
+        self.art_word.clear()
+        self.word.clear()
+        self.end_word.clear()
 
     # Method to check if a word is in the dictionary (so as not to save twice) (tab 3)
     def word_already_exists(self, word_text):
@@ -378,7 +408,9 @@ class TabOne(QMainWindow):
             self.words = updated_data
         else:
             self.show_message("Error", text="Word not found.")
-
+        self.art_word.clear()
+        self.word.clear()
+        self.end_word.clear()
         self.load_words()
 
     # Method of the process of saving words to a file
