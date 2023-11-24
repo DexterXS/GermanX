@@ -3,3 +3,6 @@
 
 # Исключаем всю конфидициальную ифнформацию
 /data/confidential_data.py
+
+# Исключаем файлы
+/data/data_deutsch_word.py

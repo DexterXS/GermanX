@@ -24,5 +24,5 @@ class LogSettings:
         if not os.path.exists(self.log_folder):
             os.makedirs(self.log_folder)
         log_filepath = os.path.join(self.log_folder, f'{formatted_datetime}.log')
-        logging.basicConfig(filename=log_filepath, level=logging.INFO,
+        logging.basicConfig(filename=log_filepath, level=logging.DEBUG,
                             format='%(asctime)s - %(levelname)s - %(message)s', filemode='a')
