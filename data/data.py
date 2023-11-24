@@ -28,5 +28,4 @@ prepositions = {
             ['seit (с, from)', 0],
             ['gegenüber (противоположный, opposite)', 0]]
 }
-inderet = ["Wissen Sie, wo ... finde?",
-           "Sagen Sie mir bitte, ob der Zug nach Berlin heute Verspätung hat? (Об ставится только когда можно ответить 'да' или 'нет' )"]
+prepositions_learned = {}
