@@ -585,57 +585,6 @@ color: rgb(255, 255, 255);</string>
              <property name="frameShadow">
               <enum>QFrame::Raised</enum>
              </property>
-             <widget class="QPushButton" name="pushButton_dat">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="geometry">
-               <rect>
-                <x>-10</x>
-                <y>-10</y>
-                <width>120</width>
-                <height>120</height>
-               </rect>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>120</width>
-                <height>120</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>120</width>
-                <height>120</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">image: url(:/img/dat.png);
-</string>
-              </property>
-              <property name="inputMethodHints">
-               <set>Qt::ImhNone</set>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-             </widget>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <widget class="QFrame" name="frame_19">
-             <property name="maximumSize">
-              <size>
-               <width>100</width>
-               <height>100</height>
-              </size>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
              <widget class="QPushButton" name="pushButton_akk">
               <property name="enabled">
                <bool>false</bool>
@@ -675,6 +624,57 @@ color: rgb(255, 255, 255);</string>
               <property name="styleSheet">
                <string notr="true">
 image: url(:/img/akk.png);</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QFrame" name="frame_19">
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>100</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <widget class="QPushButton" name="pushButton_dat">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="geometry">
+               <rect>
+                <x>-10</x>
+                <y>-10</y>
+                <width>120</width>
+                <height>120</height>
+               </rect>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>120</width>
+                <height>120</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>120</width>
+                <height>120</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">image: url(:/img/dat.png);
+</string>
+              </property>
+              <property name="inputMethodHints">
+               <set>Qt::ImhNone</set>
               </property>
               <property name="text">
                <string/>
@@ -946,6 +946,12 @@ image: url(:/img/akk.png);</string>
           </property>
           <property name="text">
            <string>ends</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="indent">
+           <number>5</number>
           </property>
          </widget>
         </item>

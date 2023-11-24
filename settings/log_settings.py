@@ -11,18 +11,18 @@ CRITICAL - Сообщения о критических ошибках, кото
 """
 
 
-
 class LogSettings:
-    def __init__(self):
+    def __init__(self, mode="INFO"):
         self.log_folder = None
 
-    def logs_settings(self):
+    @classmethod
+    def logs_settings(cls):
         current_datetime = datetime.datetime.now()
         formatted_datetime = current_datetime.strftime('%Y-%m-%d')
-        self.log_folder = 'logs'
+        cls.log_folder = 'logs'
 
-        if not os.path.exists(self.log_folder):
-            os.makedirs(self.log_folder)
-        log_filepath = os.path.join(self.log_folder, f'{formatted_datetime}.log')
+        if not os.path.exists(cls.log_folder):
+            os.makedirs(cls.log_folder)
+        log_filepath = os.path.join(cls.log_folder, f'{formatted_datetime}.log')
         logging.basicConfig(filename=log_filepath, level=logging.DEBUG,
                             format='%(asctime)s - %(levelname)s - %(message)s', filemode='a')

@@ -7,8 +7,9 @@ from PyQt5.QtWidgets import QMainWindow, QLineEdit, QListView, QComboBox, QMessa
 from qtpy import uic
 import logging
 from data.data import *
+from settings.log_settings import LogSettings
 
-
+LogSettings.logs_settings()
 
 
 class TabOne(QMainWindow):
@@ -77,19 +78,16 @@ class TabOne(QMainWindow):
         self.lcd_nummer_f = self.findChild(QLCDNumber, "lcdNumber_f")
         self.lcd_nummer_f.display(0)
 
-        # input data tab 2
+        # input data tab 3
         self.art_word = self.findChild(QLineEdit, "lineEdit_art_word")
         self.word = self.findChild(QLineEdit, "lineEdit_word")
         self.end_word = self.findChild(QLineEdit, "lineEdit_end_word")
         self.combo_box = self.findChild(QComboBox, "comboBox_type")
         self.setup_combo_box()
 
-        # Output data tab 2
+        # Output data tab 3
         self.list_view = self.findChild(QListView, "listView_list_words")
         self.list_view.setModel(self.words_model)
-
-        # test code 1041
-        #self.manually_add_word_to_model("Der", "Tisch", "-", "Nom")
 
         for button_name, image_path in self.button_images.items():
             button = self.findChild(QPushButton, button_name)
@@ -170,7 +168,7 @@ class TabOne(QMainWindow):
         self.richtig = 0
         self.falsch = 0
         self.learned = 0
-        self.not_learned = 0
+        self.not_learned = self.count_total_words(prepositions)
         self.brain()
         logging.debug('Click button restart.')
 
@@ -182,13 +180,14 @@ class TabOne(QMainWindow):
 
     def reset_button_styles(self):
         for button in [self.button_dat, self.button_akk, self.button_akk_dat]:
-            button.setStyleSheet("background-color: rgb(255, 255, 255);")
-            logging.debug(f'{button} set background-color: rgb(255, 255, 255);')
+            button.setStyleSheet("background-color: rgb(100, 100, 100);")
+            logging.debug(f'{button} set background-color: rgb(100, 100, 100);')
         self.timer.stop()
         logging.debug('Reset button style.')
 
     def setup_combo_box(self):
-        combo_box_items = ["Nom", "Verb", "что-то еще"]
+        combo_box_items = ["Nominativ", "Genitiv", "Dativ", "Akkusativ", "Verb", "Adjektiv", "Adverb", "Artikel",
+                           "Pronomen", "Präposition", "Konjunktion", "Interjektion "]
         self.combo_box.addItems(combo_box_items)
 
     def load_words(self):
@@ -221,20 +220,38 @@ class TabOne(QMainWindow):
             return []
 
     def button_save_word(self):
-        art_text = self.art_word.text()
-        word_text = self.word.text()
-        end_text = self.end_word.text()
-        type_text = self.combo_box.currentText()
-        if word_text.strip() == "":
-            self.show_message("Ошибка", text="Поле 'word' не должно быть пустым.")
+        art_text = str(self.art_word.text()).strip()
+        word_text = str(self.word.text()).strip()
+        end_text = str(self.end_word.text()).strip().replace("-", "")
+        type_text = str(self.combo_box.currentText()).strip()
+        print(type_text)
+        if word_text == "":
+            self.show_message("Error", text="Поле 'word' не должно быть пустым.")
             return
+        if art_text.strip() == "":
+            art_text = "-"
+        elif len(art_text) > 3:
+            self.show_message("Error", text="Артикль не может быть больше 3 символов.")
+            return
+        if end_text == "":
+            end_text = "-"
+        elif len(end_text) > 3:
+            self.show_message("Error", text="Окончание не может быть больше 3 символов.")
+
+        else:
+            end_text = end_text.lower()
+        if type_text in ["Nominativ", "Artikel", "Pronomen"] :
+            word_text = word_text.capitalize()
+        else:
+            word_text = word_text.lower()
+
         if not self.word_already_exists(word_text):
             print(f"Сохранение слова... (кнопка)")
-            self.save_words(art_text, word_text, end_text)
-            new_item = QStandardItem(f"{art_text}/{word_text}/{end_text} ({type_text})")
+            self.save_words(art_text.lower(), word_text, end_text.lower(), type_text)
+            new_item = QStandardItem(f"{art_text.lower()}/{word_text}/{end_text.lower()} ({type_text})")
             self.words_model.appendRow(new_item)
         else:
-            self.show_message("Слово уже существует.")
+            self.show_message("Error", "Слово уже существует.")
 
     def word_already_exists(self, word_text):
         return any(item["word"] == word_text for item in self.words)
@@ -242,7 +259,7 @@ class TabOne(QMainWindow):
     def button_delete_word(self):
         word_text = self.word.text().strip()
         if word_text == "":
-            self.show_message("Ошибка", text="Поле 'word' не должно быть пустым.")
+            self.show_message("Error", text="Поле 'word' не должно быть пустым.")
             return
 
         with open(self.full_path, "r", encoding="utf-8") as f:
@@ -254,17 +271,17 @@ class TabOne(QMainWindow):
             with open(self.full_path, "w", encoding="utf-8") as f:
                 json.dump(updated_data, f, ensure_ascii=False, indent=4)
             print(f"Удаление слова... (кнопка)")
+            self.words = updated_data
         else:
-            self.show_message("Ошибка", text="Слово не найдено.")
+            self.show_message("Error", text="Слово не найдено.")
 
         self.load_words()
 
-    def save_words(self, art_text, word_text, end_text):
-        self.words.append({"art": art_text, "word": word_text, "end": end_text})
+    def save_words(self, art_text, word_text, end_text, type_text):
+        self.words.append({"art": art_text, "word": word_text, "end": end_text, "type": type_text})
         with open(self.full_path, "w", encoding="utf-8") as f:
             json.dump(self.words, f, ensure_ascii=False, indent=4)  # Ensure proper formatting
         print(f"Сохранение слова... (процесс)")
-
 
     def move_key_value_list(self, dict1, dict2, key, value_index):
         values = dict1[key]
@@ -292,11 +309,8 @@ class TabOne(QMainWindow):
     def show_message(title, text=None):
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Information)
+        msg.setWindowIcon(QIcon("./images/germany.png"))
         msg.setWindowTitle(title)
         if text is not None:
             msg.setText(text)
         msg.exec_()
-
-
-
-
